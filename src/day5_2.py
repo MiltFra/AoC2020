@@ -12,15 +12,14 @@ def seatid(bsp):
   sid = extend_sid(sid, bsp[7:10], 'R')
   return sid
 
-ns = [0 for _ in range(1 << 10)]
+ns = {i:0 for i in range(1 << 10)}
 for line in sys.stdin:
   sid = seatid(line)
   ns[sid] += 4
-  if sid - 1 > 0:
-    ns[sid-1] += 1
-  if sid + 1 < len(ns):
-    ns[sid+1] += 2
-for i, n in enumerate(ns):
-  if n == 3:
+  ns[sid-1] += 1
+  ns[sid+1] += 2
+  print(sid, ns[sid])
+for i in ns:
+  if ns[i] == 3:
     print(i)
     break
