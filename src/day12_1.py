@@ -2,19 +2,19 @@ import sys
 from math import radians
 from cmath import rect
 
-ship_pos = 0 + 0j
-orientation = 0
+pos = 0 + 0j
+theta = 0
 
 for l in sys.stdin:
     op, val = l[0], int(l[1:])
-    if op == 'N': ship_pos += val * 1j
-    elif op == 'S': ship_pos -= val * 1j
-    elif op == 'E': ship_pos += val
-    elif op == 'W': ship_pos -= val
-    elif op == 'L': orientation += val
-    elif op == 'R': orientation -= val
-    elif op == 'F': ship_pos += rect(val, radians(orientation))
+    if op == 'N': pos += val * 1j
+    elif op == 'S': pos -= val * 1j
+    elif op == 'E': pos += val
+    elif op == 'W': pos -= val
+    elif op == 'L': theta += val
+    elif op == 'R': theta -= val
+    elif op == 'F': pos += rect(val, radians(theta))
 
 print(
-    f"p={ship_pos.real:.0f}+{ship_pos.imag:.0f}i, d={abs(ship_pos.real) + abs(ship_pos.imag):.0f}"
+    f"p={pos.real:.0f}+{pos.imag:.0f}i, d={abs(pos.real) + abs(pos.imag):.0f}"
 )
