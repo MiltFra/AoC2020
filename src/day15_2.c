@@ -29,16 +29,16 @@ int main(void) {
   t = 0;
   next(&n);
   while (n != EOF) {
-    buffer[n] = t++;
+    buffer[n] = ++t;
     last = n;
     next(&n);
   }
   for (; t < NUM; t++) {
     n = 0;
     if (buffer[last] >= 0) {
-      n = t - 1 - buffer[last];
+      n = t - buffer[last];
     }
-    buffer[last] = t - 1;
+    buffer[last] = t;
     last = n;
   }
   printf("%d\n", last);
