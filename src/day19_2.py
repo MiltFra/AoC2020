@@ -14,6 +14,7 @@ def read_rule(rules: dict, l: str):
 
 def compile(rules: dict, max_len: int) -> str:
     rxs = [None for _ in range(1 + max(rules.keys()))]
+    lens = [1 for _ in range(1 + max(rules.keys()))]
     stack = [0]
     while len(stack) > 0:
         e = stack[-1]
@@ -31,10 +32,13 @@ def compile(rules: dict, max_len: int) -> str:
                 continue
             if e == 11:
                 a, b = rules[e][1][0]  # [42, 31]
+                l = lens[a] + lens[b]
                 r = []
-                r = [r := [a] + r + [b] for _ in range(max_len // 2)]
+                r = [r := [a] + r + [b] for _ in range(max_len // l)]
                 rules[e] = (1, r)
             rs = [[rxs[r] for r in sub] for sub in rules[e][1]]
+            lens[e] = min(
+                [sum(map(lambda x: lens[x], sub)) for sub in rules[e][1]])
             f = lambda x: '(' + x + ')'
             rxs[e] = f('|'.join(map(lambda x: ''.join(x), rs)))
             if e == 8:
